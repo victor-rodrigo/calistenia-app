@@ -2,11 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/theme.dart';
-import 'features/home/home_screen.dart';
+import 'features/exercises/exercises_screen.dart';
+import 'features/history/history_screen.dart';
+import 'features/routines/routines_screen.dart';
+import 'features/shell/scaffold_with_nav.dart';
 
 final _router = GoRouter(
+  initialLocation: '/exercicios',
   routes: [
-    GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) =>
+          ScaffoldWithNav(navigationShell: navigationShell),
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/fichas',
+              builder: (context, state) => const RoutinesScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/exercicios',
+              builder: (context, state) => const ExercisesScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/historico',
+              builder: (context, state) => const HistoryScreen(),
+            ),
+          ],
+        ),
+      ],
+    ),
   ],
 );
 
