@@ -44,9 +44,12 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Assinatura / segredos (nunca versionar)
+# Keystores e segredos
 *.jks
 *.keystore
 **/key.properties
 .env
 .env.*
+
+# Local
+CLAUDE.md
