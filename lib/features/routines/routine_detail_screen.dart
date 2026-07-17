@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/ui.dart';
 import '../../data/database/database.dart';
 import '../../data/repositories/routine_repository.dart';
+import '../session/session_providers.dart';
+import '../session/session_screen.dart';
 import 'exercise_picker_screen.dart';
 import 'exercise_config_dialog.dart';
 import 'routines_providers.dart';
@@ -72,6 +74,11 @@ class _DaySection extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
+                  icon: const Icon(Icons.play_arrow),
+                  tooltip: 'Iniciar treino',
+                  onPressed: () => _startWorkout(context, ref),
+                ),
+                IconButton(
                   icon: const Icon(Icons.add),
                   tooltip: 'Adicionar exercício',
                   onPressed: () => _addExercise(context, ref),
@@ -111,6 +118,17 @@ class _DaySection extends ConsumerWidget {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  Future<void> _startWorkout(BuildContext context, WidgetRef ref) async {
+    final sessionId =
+        await ref.read(sessionRepositoryProvider).startSession(day.id);
+    if (!context.mounted) return;
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => SessionScreen(sessionId: sessionId, day: day),
       ),
     );
   }
