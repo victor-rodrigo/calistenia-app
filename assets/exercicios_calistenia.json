@@ -1,0 +1,702 @@
+[
+  {
+    "nome": "Abdominal",
+    "nomeOriginal": "Crunches",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Crunches.jpg"
+  },
+  {
+    "nome": "Abdominal 3/4",
+    "nomeOriginal": "3/4 Sit-Up",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/3_4_Sit-Up.jpg"
+  },
+  {
+    "nome": "Abdominal Janda",
+    "nomeOriginal": "Janda Sit-Up",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Janda_Sit-Up.jpg"
+  },
+  {
+    "nome": "Abdominal agrupado",
+    "nomeOriginal": "Tuck Crunch",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Tuck_Crunch.jpg"
+  },
+  {
+    "nome": "Abdominal canivete",
+    "nomeOriginal": "Jackknife Sit-Up",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Jackknife_Sit-Up.jpg"
+  },
+  {
+    "nome": "Abdominal casulo",
+    "nomeOriginal": "Cocoons",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Cocoons.jpg"
+  },
+  {
+    "nome": "Abdominal com braços estendidos",
+    "nomeOriginal": "Crunch - Hands Overhead",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Crunch_-_Hands_Overhead.jpg"
+  },
+  {
+    "nome": "Abdominal com pernas elevadas",
+    "nomeOriginal": "Crunch - Legs On Exercise Ball",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Crunch_-_Legs_On_Exercise_Ball.jpg"
+  },
+  {
+    "nome": "Abdominal completo",
+    "nomeOriginal": "Sit-Up",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Sit-Up.jpg"
+  },
+  {
+    "nome": "Abdominal cruzado",
+    "nomeOriginal": "Cross-Body Crunch",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Cross-Body_Crunch.jpg"
+  },
+  {
+    "nome": "Abdominal dead bug",
+    "nomeOriginal": "Dead Bug",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Dead_Bug.jpg"
+  },
+  {
+    "nome": "Abdominal declinado",
+    "nomeOriginal": "Decline Crunch",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Decline_Crunch.jpg"
+  },
+  {
+    "nome": "Abdominal oblíquo",
+    "nomeOriginal": "Oblique Crunches",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Oblique_Crunches.jpg"
+  },
+  {
+    "nome": "Abdominal oblíquo declinado",
+    "nomeOriginal": "Decline Oblique Crunch",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Decline_Oblique_Crunch.jpg"
+  },
+  {
+    "nome": "Abdominal oblíquo no chão",
+    "nomeOriginal": "Oblique Crunches - On The Floor",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Oblique_Crunches_-_On_The_Floor.jpg"
+  },
+  {
+    "nome": "Abdominal reverso",
+    "nomeOriginal": "Reverse Crunch",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Reverse_Crunch.jpg"
+  },
+  {
+    "nome": "Abdominal reverso declinado",
+    "nomeOriginal": "Decline Reverse Crunch",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Decline_Reverse_Crunch.jpg"
+  },
+  {
+    "nome": "Abdominal sapo",
+    "nomeOriginal": "Frog Sit-Ups",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Frog_Sit-Ups.jpg"
+  },
+  {
+    "nome": "Agachamento com salto",
+    "nomeOriginal": "Freehand Jump Squat",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Freehand_Jump_Squat.jpg"
+  },
+  {
+    "nome": "Agachamento livre",
+    "nomeOriginal": "Bodyweight Squat",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Bodyweight_Squat.jpg"
+  },
+  {
+    "nome": "Barra Gironda (esterno)",
+    "nomeOriginal": "Gironda Sternum Chins",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Gironda_Sternum_Chins.jpg"
+  },
+  {
+    "nome": "Barra Rocky",
+    "nomeOriginal": "Rocky Pull-Ups/Pulldowns",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Rocky_Pull-Ups_Pulldowns.jpg"
+  },
+  {
+    "nome": "Barra com abdominal (gorilla chin)",
+    "nomeOriginal": "Gorilla Chin/Crunch",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Gorilla_Chin_Crunch.jpg"
+  },
+  {
+    "nome": "Barra com pegada mista",
+    "nomeOriginal": "Mixed Grip Chin",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Mixed_Grip_Chin.jpg"
+  },
+  {
+    "nome": "Barra fixa",
+    "nomeOriginal": "Pullups",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Pullups.jpg"
+  },
+  {
+    "nome": "Barra fixa aberta atrás da nuca",
+    "nomeOriginal": "Wide-Grip Rear Pull-Up",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Wide-Grip_Rear_Pull-Up.jpg"
+  },
+  {
+    "nome": "Barra fixa assistida com elástico",
+    "nomeOriginal": "Band Assisted Pull-Up",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Band_Assisted_Pull-Up.jpg"
+  },
+  {
+    "nome": "Barra fixa com triângulo",
+    "nomeOriginal": "V-Bar Pullup",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/V-Bar_Pullup.jpg"
+  },
+  {
+    "nome": "Barra lado a lado",
+    "nomeOriginal": "Side To Side Chins",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Side_To_Side_Chins.jpg"
+  },
+  {
+    "nome": "Barra supinada",
+    "nomeOriginal": "Chin-Up",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Chin-Up.jpg"
+  },
+  {
+    "nome": "Barra supinada com um braço",
+    "nomeOriginal": "One Arm Chin-Up",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/One_Arm_Chin-Up.jpg"
+  },
+  {
+    "nome": "Bicicleta no ar",
+    "nomeOriginal": "Air Bike",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Air_Bike.jpg"
+  },
+  {
+    "nome": "Calcanhar ao glúteo (uma perna)",
+    "nomeOriginal": "Single Leg Butt Kick",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Single_Leg_Butt_Kick.jpg"
+  },
+  {
+    "nome": "Calcanhar aos glúteos (dois pés)",
+    "nomeOriginal": "Double Leg Butt Kick",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Double_Leg_Butt_Kick.jpg"
+  },
+  {
+    "nome": "Caminhada aranha",
+    "nomeOriginal": "Spider Crawl",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Spider_Crawl.jpg"
+  },
+  {
+    "nome": "Canivete lateral",
+    "nomeOriginal": "Side Jackknife",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Side_Jackknife.jpg"
+  },
+  {
+    "nome": "Chute alternado (flutter kicks)",
+    "nomeOriginal": "Flutter Kicks",
+    "grupoMuscular": "Glúteos",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Flutter_Kicks.jpg"
+  },
+  {
+    "nome": "Contração isométrica de peito",
+    "nomeOriginal": "Isometric Chest Squeezes",
+    "grupoMuscular": "Peito",
+    "tipo": "tempo",
+    "imagem": "assets/exercicios/Isometric_Chest_Squeezes.jpg"
+  },
+  {
+    "nome": "Corridas curtas (wind sprints)",
+    "nomeOriginal": "Wind Sprints",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Wind_Sprints.jpg"
+  },
+  {
+    "nome": "Cotovelo ao joelho",
+    "nomeOriginal": "Elbow to Knee",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Elbow_to_Knee.jpg"
+  },
+  {
+    "nome": "Elevação de pernas",
+    "nomeOriginal": "Leg Lift",
+    "grupoMuscular": "Glúteos",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Leg_Lift.jpg"
+  },
+  {
+    "nome": "Elevação de pernas deitado no banco",
+    "nomeOriginal": "Flat Bench Lying Leg Raise",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Flat_Bench_Lying_Leg_Raise.jpg"
+  },
+  {
+    "nome": "Elevação de pernas e quadril",
+    "nomeOriginal": "Bottoms Up",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Bottoms_Up.jpg"
+  },
+  {
+    "nome": "Elevação de pernas em L na barra",
+    "nomeOriginal": "Hanging Pike",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Hanging_Pike.jpg"
+  },
+  {
+    "nome": "Elevação de pernas na barra",
+    "nomeOriginal": "Hanging Leg Raise",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Hanging_Leg_Raise.jpg"
+  },
+  {
+    "nome": "Elevação de quadril com joelhos flexionados",
+    "nomeOriginal": "Bent-Knee Hip Raise",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Bent-Knee_Hip_Raise.jpg"
+  },
+  {
+    "nome": "Elevação de quadril na prancha",
+    "nomeOriginal": "Butt-Ups",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Butt-Ups.jpg"
+  },
+  {
+    "nome": "Elevação de tronco (body-up)",
+    "nomeOriginal": "Body-Up",
+    "grupoMuscular": "Tríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Body-Up.jpg"
+  },
+  {
+    "nome": "Extensão de glúteo (coice)",
+    "nomeOriginal": "Glute Kickback",
+    "grupoMuscular": "Glúteos",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Glute_Kickback.jpg"
+  },
+  {
+    "nome": "Extensão de tríceps com peso corporal",
+    "nomeOriginal": "Body Tricep Press",
+    "grupoMuscular": "Tríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Body_Tricep_Press.jpg"
+  },
+  {
+    "nome": "Extensão de tríceps com toalha",
+    "nomeOriginal": "Standing Towel Triceps Extension",
+    "grupoMuscular": "Tríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Standing_Towel_Triceps_Extension.jpg"
+  },
+  {
+    "nome": "Flexão",
+    "nomeOriginal": "Pushups",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Pushups.jpg"
+  },
+  {
+    "nome": "Flexão (pegada fechada e aberta)",
+    "nomeOriginal": "Pushups (Close and Wide Hand Positions)",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Pushups_Close_and_Wide_Hand_Positions.jpg"
+  },
+  {
+    "nome": "Flexão aberta",
+    "nomeOriginal": "Push-Up Wide",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Push-Up_Wide.jpg"
+  },
+  {
+    "nome": "Flexão com pegada fechada",
+    "nomeOriginal": "Close-Grip Push-Up off of a Dumbbell",
+    "grupoMuscular": "Tríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Close-Grip_Push-Up_off_of_a_Dumbbell.jpg"
+  },
+  {
+    "nome": "Flexão com prancha lateral",
+    "nomeOriginal": "Push Up to Side Plank",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Push_Up_to_Side_Plank.jpg"
+  },
+  {
+    "nome": "Flexão com um braço",
+    "nomeOriginal": "Single-Arm Push-Up",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Single-Arm_Push-Up.jpg"
+  },
+  {
+    "nome": "Flexão declinada (pés elevados)",
+    "nomeOriginal": "Push-Ups With Feet Elevated",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Push-Ups_With_Feet_Elevated.jpg"
+  },
+  {
+    "nome": "Flexão fechada (tríceps)",
+    "nomeOriginal": "Push-Ups - Close Triceps Position",
+    "grupoMuscular": "Tríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Push-Ups_-_Close_Triceps_Position.jpg"
+  },
+  {
+    "nome": "Flexão inclinada",
+    "nomeOriginal": "Incline Push-Up",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Incline_Push-Up.jpg"
+  },
+  {
+    "nome": "Flexão inclinada (pegada invertida)",
+    "nomeOriginal": "Incline Push-Up Reverse Grip",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Incline_Push-Up_Reverse_Grip.jpg"
+  },
+  {
+    "nome": "Flexão inclinada (pegada média)",
+    "nomeOriginal": "Incline Push-Up Medium",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Incline_Push-Up_Medium.jpg"
+  },
+  {
+    "nome": "Flexão inclinada aberta",
+    "nomeOriginal": "Incline Push-Up Wide",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Incline_Push-Up_Wide.jpg"
+  },
+  {
+    "nome": "Flexão inclinada fechada",
+    "nomeOriginal": "Incline Push-Up Close-Grip",
+    "grupoMuscular": "Tríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Incline_Push-Up_Close-Grip.jpg"
+  },
+  {
+    "nome": "Flexão nórdica (glúteo-femoral)",
+    "nomeOriginal": "Natural Glute Ham Raise",
+    "grupoMuscular": "Posterior de coxa",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Natural_Glute_Ham_Raise.jpg"
+  },
+  {
+    "nome": "Flexão parada de mão",
+    "nomeOriginal": "Handstand Push-Ups",
+    "grupoMuscular": "Ombros",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Handstand_Push-Ups.jpg"
+  },
+  {
+    "nome": "Flexão pliométrica",
+    "nomeOriginal": "Plyo Push-up",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Plyo_Push-up.jpg"
+  },
+  {
+    "nome": "Flexão relógio",
+    "nomeOriginal": "Clock Push-Up",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Clock_Push-Up.jpg"
+  },
+  {
+    "nome": "Flexão suspensa",
+    "nomeOriginal": "Suspended Push-Up",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Suspended_Push-Up.jpg"
+  },
+  {
+    "nome": "Hiperextensão lombar no chão",
+    "nomeOriginal": "Hyperextensions With No Hyperextension Bench",
+    "grupoMuscular": "Lombar",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Hyperextensions_With_No_Hyperextension_Bench.jpg"
+  },
+  {
+    "nome": "Isometria de peito (wipers)",
+    "nomeOriginal": "Isometric Wipers",
+    "grupoMuscular": "Peito",
+    "tipo": "tempo",
+    "imagem": "assets/exercicios/Isometric_Wipers.jpg"
+  },
+  {
+    "nome": "Isometria de pescoço (frente e trás)",
+    "nomeOriginal": "Isometric Neck Exercise - Front And Back",
+    "grupoMuscular": "Pescoço",
+    "tipo": "tempo",
+    "imagem": "assets/exercicios/Isometric_Neck_Exercise_-_Front_And_Back.jpg"
+  },
+  {
+    "nome": "Isometria de pescoço (laterais)",
+    "nomeOriginal": "Isometric Neck Exercise - Sides",
+    "grupoMuscular": "Pescoço",
+    "tipo": "tempo",
+    "imagem": "assets/exercicios/Isometric_Neck_Exercise_-_Sides.jpg"
+  },
+  {
+    "nome": "Mergulho no banco",
+    "nomeOriginal": "Bench Dips",
+    "grupoMuscular": "Tríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Bench_Dips.jpg"
+  },
+  {
+    "nome": "Muscle up",
+    "nomeOriginal": "Muscle Up",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Muscle_Up.jpg"
+  },
+  {
+    "nome": "Muscle up com impulso (kipping)",
+    "nomeOriginal": "Kipping Muscle Up",
+    "grupoMuscular": "Costas",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Kipping_Muscle_Up.jpg"
+  },
+  {
+    "nome": "Paralelas",
+    "nomeOriginal": "Parallel Bar Dip",
+    "grupoMuscular": "Tríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Parallel_Bar_Dip.jpg"
+  },
+  {
+    "nome": "Paralelas (foco peito)",
+    "nomeOriginal": "Dips - Chest Version",
+    "grupoMuscular": "Peito",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Dips_-_Chest_Version.jpg"
+  },
+  {
+    "nome": "Paralelas (foco tríceps)",
+    "nomeOriginal": "Dips - Triceps Version",
+    "grupoMuscular": "Tríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Dips_-_Triceps_Version.jpg"
+  },
+  {
+    "nome": "Paralelas nas argolas",
+    "nomeOriginal": "Ring Dips",
+    "grupoMuscular": "Tríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Ring_Dips.jpg"
+  },
+  {
+    "nome": "Polichinelo estrela",
+    "nomeOriginal": "Star Jump",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Star_Jump.jpg"
+  },
+  {
+    "nome": "Ponte de glúteo unilateral",
+    "nomeOriginal": "Single Leg Glute Bridge",
+    "grupoMuscular": "Glúteos",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Single_Leg_Glute_Bridge.jpg"
+  },
+  {
+    "nome": "Ponte de glúteos",
+    "nomeOriginal": "Butt Lift (Bridge)",
+    "grupoMuscular": "Glúteos",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Butt_Lift_Bridge.jpg"
+  },
+  {
+    "nome": "Prancha",
+    "nomeOriginal": "Plank",
+    "grupoMuscular": "Abdômen",
+    "tipo": "tempo",
+    "imagem": "assets/exercicios/Plank.jpg"
+  },
+  {
+    "nome": "Prancha lateral (ponte)",
+    "nomeOriginal": "Side Bridge",
+    "grupoMuscular": "Abdômen",
+    "tipo": "tempo",
+    "imagem": "assets/exercicios/Side_Bridge.jpg"
+  },
+  {
+    "nome": "Pular corda rápido",
+    "nomeOriginal": "Fast Skipping",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Fast_Skipping.jpg"
+  },
+  {
+    "nome": "Recolhimento de pernas",
+    "nomeOriginal": "Leg Pull-In",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Leg_Pull-In.jpg"
+  },
+  {
+    "nome": "Recolhimento de pernas no banco",
+    "nomeOriginal": "Flat Bench Leg Pull-In",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Flat_Bench_Leg_Pull-In.jpg"
+  },
+  {
+    "nome": "Recolhimento de pernas sentado",
+    "nomeOriginal": "Seated Leg Tucks",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Seated_Leg_Tucks.jpg"
+  },
+  {
+    "nome": "Recolhimento de pernas sentado no banco",
+    "nomeOriginal": "Seated Flat Bench Leg Pull-In",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Seated_Flat_Bench_Leg_Pull-In.jpg"
+  },
+  {
+    "nome": "Rotação russa",
+    "nomeOriginal": "Russian Twist",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Russian_Twist.jpg"
+  },
+  {
+    "nome": "Salto afundo",
+    "nomeOriginal": "Split Jump",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Split_Jump.jpg"
+  },
+  {
+    "nome": "Salto com joelhos ao peito",
+    "nomeOriginal": "Knee Tuck Jump",
+    "grupoMuscular": "Posterior de coxa",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Knee_Tuck_Jump.jpg"
+  },
+  {
+    "nome": "Salto foguete",
+    "nomeOriginal": "Rocket Jump",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Rocket_Jump.jpg"
+  },
+  {
+    "nome": "Salto horizontal",
+    "nomeOriginal": "Standing Long Jump",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Standing_Long_Jump.jpg"
+  },
+  {
+    "nome": "Salto lateral",
+    "nomeOriginal": "Lateral Bound",
+    "grupoMuscular": "Adutores",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Lateral_Bound.jpg"
+  },
+  {
+    "nome": "Salto no banco",
+    "nomeOriginal": "Bench Jump",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Bench_Jump.jpg"
+  },
+  {
+    "nome": "Salto tesoura",
+    "nomeOriginal": "Scissors Jump",
+    "grupoMuscular": "Quadríceps",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Scissors_Jump.jpg"
+  },
+  {
+    "nome": "Step-up com elevação de joelho",
+    "nomeOriginal": "Step-up with Knee Raise",
+    "grupoMuscular": "Glúteos",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Step-up_with_Knee_Raise.jpg"
+  },
+  {
+    "nome": "Toque alternado no calcanhar",
+    "nomeOriginal": "Alternate Heel Touchers",
+    "grupoMuscular": "Abdômen",
+    "tipo": "reps",
+    "imagem": "assets/exercicios/Alternate_Heel_Touchers.jpg"
+  }
+]

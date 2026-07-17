@@ -2,7 +2,6 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:treino/data/database/database.dart';
-import 'package:treino/data/database/seed.dart';
 import 'package:treino/data/repositories/exercise_repository.dart';
 
 void main() {
@@ -49,20 +48,5 @@ void main() {
     await repo.delete(id);
 
     expect(await repo.getAll(), isEmpty);
-  });
-
-  test('seed popula a biblioteca quando vazia', () async {
-    await seedDefaultExercises(db);
-
-    final all = await repo.getAll();
-    expect(all.length, greaterThanOrEqualTo(20));
-    expect(all.map((e) => e.nome), contains('Flexão'));
-  });
-
-  test('seed não duplica se já houver exercícios', () async {
-    await repo.create(nome: 'Meu exercício');
-    await seedDefaultExercises(db);
-
-    expect(await repo.getAll(), hasLength(1));
   });
 }

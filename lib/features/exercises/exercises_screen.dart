@@ -48,12 +48,45 @@ class _ExerciseTile extends ConsumerWidget {
     ].join(' · ');
 
     return ListTile(
+      leading: _Thumb(imagem: exercise.imagem),
       title: Text(exercise.nome),
       subtitle: Text(subtitle),
       onTap: () => _openForm(context, exercise),
       trailing: IconButton(
         icon: const Icon(Icons.delete_outline),
         onPressed: () => _confirmDelete(context, ref, exercise),
+      ),
+    );
+  }
+}
+
+class _Thumb extends StatelessWidget {
+  const _Thumb({this.imagem});
+
+  final String? imagem;
+
+  @override
+  Widget build(BuildContext context) {
+    const size = 48.0;
+    if (imagem == null) {
+      return const SizedBox(
+        width: size,
+        height: size,
+        child: Icon(Icons.fitness_center),
+      );
+    }
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(6),
+      child: Image.asset(
+        imagem!,
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+        errorBuilder: (_, _, _) => const SizedBox(
+          width: size,
+          height: size,
+          child: Icon(Icons.fitness_center),
+        ),
       ),
     );
   }

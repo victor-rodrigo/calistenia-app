@@ -12,6 +12,7 @@ Exercise _ex(int id, String nome, String grupo) => Exercise(
       tipo: 'reps',
       grupoMuscular: grupo,
       categoriaSkill: null,
+      imagem: null,
       notas: null,
     );
 

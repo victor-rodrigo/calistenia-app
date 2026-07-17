@@ -67,6 +67,15 @@ class $ExercisesTable extends Exercises
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _imagemMeta = const VerificationMeta('imagem');
+  @override
+  late final GeneratedColumn<String> imagem = GeneratedColumn<String>(
+    'imagem',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _notasMeta = const VerificationMeta('notas');
   @override
   late final GeneratedColumn<String> notas = GeneratedColumn<String>(
@@ -83,6 +92,7 @@ class $ExercisesTable extends Exercises
     tipo,
     grupoMuscular,
     categoriaSkill,
+    imagem,
     notas,
   ];
   @override
@@ -132,6 +142,12 @@ class $ExercisesTable extends Exercises
         ),
       );
     }
+    if (data.containsKey('imagem')) {
+      context.handle(
+        _imagemMeta,
+        imagem.isAcceptableOrUnknown(data['imagem']!, _imagemMeta),
+      );
+    }
     if (data.containsKey('notas')) {
       context.handle(
         _notasMeta,
@@ -167,6 +183,10 @@ class $ExercisesTable extends Exercises
         DriftSqlType.string,
         data['${effectivePrefix}categoria_skill'],
       ),
+      imagem: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}imagem'],
+      ),
       notas: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}notas'],
@@ -183,13 +203,10 @@ class $ExercisesTable extends Exercises
 class Exercise extends DataClass implements Insertable<Exercise> {
   final int id;
   final String nome;
-
-  /// 'reps' | 'tempo' | 'ponderado'
   final String tipo;
   final String? grupoMuscular;
-
-  /// Categoria de skill (ex.: 'Muscle-up') quando o exercício faz parte de uma progressão.
   final String? categoriaSkill;
+  final String? imagem;
   final String? notas;
   const Exercise({
     required this.id,
@@ -197,6 +214,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
     required this.tipo,
     this.grupoMuscular,
     this.categoriaSkill,
+    this.imagem,
     this.notas,
   });
   @override
@@ -210,6 +228,9 @@ class Exercise extends DataClass implements Insertable<Exercise> {
     }
     if (!nullToAbsent || categoriaSkill != null) {
       map['categoria_skill'] = Variable<String>(categoriaSkill);
+    }
+    if (!nullToAbsent || imagem != null) {
+      map['imagem'] = Variable<String>(imagem);
     }
     if (!nullToAbsent || notas != null) {
       map['notas'] = Variable<String>(notas);
@@ -228,6 +249,9 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       categoriaSkill: categoriaSkill == null && nullToAbsent
           ? const Value.absent()
           : Value(categoriaSkill),
+      imagem: imagem == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imagem),
       notas: notas == null && nullToAbsent
           ? const Value.absent()
           : Value(notas),
@@ -245,6 +269,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       tipo: serializer.fromJson<String>(json['tipo']),
       grupoMuscular: serializer.fromJson<String?>(json['grupoMuscular']),
       categoriaSkill: serializer.fromJson<String?>(json['categoriaSkill']),
+      imagem: serializer.fromJson<String?>(json['imagem']),
       notas: serializer.fromJson<String?>(json['notas']),
     );
   }
@@ -257,6 +282,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       'tipo': serializer.toJson<String>(tipo),
       'grupoMuscular': serializer.toJson<String?>(grupoMuscular),
       'categoriaSkill': serializer.toJson<String?>(categoriaSkill),
+      'imagem': serializer.toJson<String?>(imagem),
       'notas': serializer.toJson<String?>(notas),
     };
   }
@@ -267,6 +293,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
     String? tipo,
     Value<String?> grupoMuscular = const Value.absent(),
     Value<String?> categoriaSkill = const Value.absent(),
+    Value<String?> imagem = const Value.absent(),
     Value<String?> notas = const Value.absent(),
   }) => Exercise(
     id: id ?? this.id,
@@ -278,6 +305,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
     categoriaSkill: categoriaSkill.present
         ? categoriaSkill.value
         : this.categoriaSkill,
+    imagem: imagem.present ? imagem.value : this.imagem,
     notas: notas.present ? notas.value : this.notas,
   );
   Exercise copyWithCompanion(ExercisesCompanion data) {
@@ -291,6 +319,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       categoriaSkill: data.categoriaSkill.present
           ? data.categoriaSkill.value
           : this.categoriaSkill,
+      imagem: data.imagem.present ? data.imagem.value : this.imagem,
       notas: data.notas.present ? data.notas.value : this.notas,
     );
   }
@@ -303,6 +332,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
           ..write('tipo: $tipo, ')
           ..write('grupoMuscular: $grupoMuscular, ')
           ..write('categoriaSkill: $categoriaSkill, ')
+          ..write('imagem: $imagem, ')
           ..write('notas: $notas')
           ..write(')'))
         .toString();
@@ -310,7 +340,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
 
   @override
   int get hashCode =>
-      Object.hash(id, nome, tipo, grupoMuscular, categoriaSkill, notas);
+      Object.hash(id, nome, tipo, grupoMuscular, categoriaSkill, imagem, notas);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -320,6 +350,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
           other.tipo == this.tipo &&
           other.grupoMuscular == this.grupoMuscular &&
           other.categoriaSkill == this.categoriaSkill &&
+          other.imagem == this.imagem &&
           other.notas == this.notas);
 }
 
@@ -329,6 +360,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
   final Value<String> tipo;
   final Value<String?> grupoMuscular;
   final Value<String?> categoriaSkill;
+  final Value<String?> imagem;
   final Value<String?> notas;
   const ExercisesCompanion({
     this.id = const Value.absent(),
@@ -336,6 +368,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     this.tipo = const Value.absent(),
     this.grupoMuscular = const Value.absent(),
     this.categoriaSkill = const Value.absent(),
+    this.imagem = const Value.absent(),
     this.notas = const Value.absent(),
   });
   ExercisesCompanion.insert({
@@ -344,6 +377,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     this.tipo = const Value.absent(),
     this.grupoMuscular = const Value.absent(),
     this.categoriaSkill = const Value.absent(),
+    this.imagem = const Value.absent(),
     this.notas = const Value.absent(),
   }) : nome = Value(nome);
   static Insertable<Exercise> custom({
@@ -352,6 +386,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     Expression<String>? tipo,
     Expression<String>? grupoMuscular,
     Expression<String>? categoriaSkill,
+    Expression<String>? imagem,
     Expression<String>? notas,
   }) {
     return RawValuesInsertable({
@@ -360,6 +395,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
       if (tipo != null) 'tipo': tipo,
       if (grupoMuscular != null) 'grupo_muscular': grupoMuscular,
       if (categoriaSkill != null) 'categoria_skill': categoriaSkill,
+      if (imagem != null) 'imagem': imagem,
       if (notas != null) 'notas': notas,
     });
   }
@@ -370,6 +406,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     Value<String>? tipo,
     Value<String?>? grupoMuscular,
     Value<String?>? categoriaSkill,
+    Value<String?>? imagem,
     Value<String?>? notas,
   }) {
     return ExercisesCompanion(
@@ -378,6 +415,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
       tipo: tipo ?? this.tipo,
       grupoMuscular: grupoMuscular ?? this.grupoMuscular,
       categoriaSkill: categoriaSkill ?? this.categoriaSkill,
+      imagem: imagem ?? this.imagem,
       notas: notas ?? this.notas,
     );
   }
@@ -400,6 +438,9 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     if (categoriaSkill.present) {
       map['categoria_skill'] = Variable<String>(categoriaSkill.value);
     }
+    if (imagem.present) {
+      map['imagem'] = Variable<String>(imagem.value);
+    }
     if (notas.present) {
       map['notas'] = Variable<String>(notas.value);
     }
@@ -414,6 +455,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
           ..write('tipo: $tipo, ')
           ..write('grupoMuscular: $grupoMuscular, ')
           ..write('categoriaSkill: $categoriaSkill, ')
+          ..write('imagem: $imagem, ')
           ..write('notas: $notas')
           ..write(')'))
         .toString();
@@ -1621,8 +1663,6 @@ class WorkoutSession extends DataClass implements Insertable<WorkoutSession> {
   final int id;
   final int? routineDayId;
   final DateTime data;
-
-  /// 'em_andamento' | 'concluida'
   final String status;
   const WorkoutSession({
     required this.id,
@@ -2038,8 +2078,6 @@ class SetLog extends DataClass implements Insertable<SetLog> {
   final int numeroSerie;
   final int? repsFeitas;
   final int? duracaoSeg;
-
-  /// Carga (kg) ou RPE, dependendo do tipo de exercício.
   final double? cargaOuRpe;
   final bool concluida;
   const SetLog({
@@ -3032,6 +3070,7 @@ typedef $$ExercisesTableCreateCompanionBuilder =
       Value<String> tipo,
       Value<String?> grupoMuscular,
       Value<String?> categoriaSkill,
+      Value<String?> imagem,
       Value<String?> notas,
     });
 typedef $$ExercisesTableUpdateCompanionBuilder =
@@ -3041,6 +3080,7 @@ typedef $$ExercisesTableUpdateCompanionBuilder =
       Value<String> tipo,
       Value<String?> grupoMuscular,
       Value<String?> categoriaSkill,
+      Value<String?> imagem,
       Value<String?> notas,
     });
 
@@ -3119,6 +3159,11 @@ class $$ExercisesTableFilterComposer
 
   ColumnFilters<String> get categoriaSkill => $composableBuilder(
     column: $table.categoriaSkill,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get imagem => $composableBuilder(
+    column: $table.imagem,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3212,6 +3257,11 @@ class $$ExercisesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get imagem => $composableBuilder(
+    column: $table.imagem,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get notas => $composableBuilder(
     column: $table.notas,
     builder: (column) => ColumnOrderings(column),
@@ -3245,6 +3295,9 @@ class $$ExercisesTableAnnotationComposer
     column: $table.categoriaSkill,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get imagem =>
+      $composableBuilder(column: $table.imagem, builder: (column) => column);
 
   GeneratedColumn<String> get notas =>
       $composableBuilder(column: $table.notas, builder: (column) => column);
@@ -3333,6 +3386,7 @@ class $$ExercisesTableTableManager
                 Value<String> tipo = const Value.absent(),
                 Value<String?> grupoMuscular = const Value.absent(),
                 Value<String?> categoriaSkill = const Value.absent(),
+                Value<String?> imagem = const Value.absent(),
                 Value<String?> notas = const Value.absent(),
               }) => ExercisesCompanion(
                 id: id,
@@ -3340,6 +3394,7 @@ class $$ExercisesTableTableManager
                 tipo: tipo,
                 grupoMuscular: grupoMuscular,
                 categoriaSkill: categoriaSkill,
+                imagem: imagem,
                 notas: notas,
               ),
           createCompanionCallback:
@@ -3349,6 +3404,7 @@ class $$ExercisesTableTableManager
                 Value<String> tipo = const Value.absent(),
                 Value<String?> grupoMuscular = const Value.absent(),
                 Value<String?> categoriaSkill = const Value.absent(),
+                Value<String?> imagem = const Value.absent(),
                 Value<String?> notas = const Value.absent(),
               }) => ExercisesCompanion.insert(
                 id: id,
@@ -3356,6 +3412,7 @@ class $$ExercisesTableTableManager
                 tipo: tipo,
                 grupoMuscular: grupoMuscular,
                 categoriaSkill: categoriaSkill,
+                imagem: imagem,
                 notas: notas,
               ),
           withReferenceMapper: (p0) => p0

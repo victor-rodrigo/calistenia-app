@@ -9,6 +9,7 @@ class Exercises extends Table {
   TextColumn get tipo => text().withDefault(const Constant('reps'))();
   TextColumn get grupoMuscular => text().nullable()();
   TextColumn get categoriaSkill => text().nullable()();
+  TextColumn get imagem => text().nullable()();
   TextColumn get notas => text().nullable()();
 }
 
@@ -93,11 +94,14 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? driftDatabase(name: 'treino_db'));
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (m) => m.createAll(),
+        onUpgrade: (m, from, to) async {
+          if (from < 2) await m.addColumn(exercises, exercises.imagem);
+        },
         beforeOpen: (details) async {
           await customStatement('PRAGMA foreign_keys = ON');
         },

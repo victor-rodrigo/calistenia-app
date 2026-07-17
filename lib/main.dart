@@ -9,7 +9,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final container = ProviderContainer();
-  await seedDefaultExercises(container.read(databaseProvider));
+  await seedFromAsset(container.read(databaseProvider));
 
   runApp(
     UncontrolledProviderScope(
