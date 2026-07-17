@@ -91,4 +91,25 @@ void main() {
     expect(logs.single.exercise.nome, 'Flexão');
     expect(logs.single.log.repsFeitas, 10);
   });
+
+  test('evolução do exercício: máximos por sessão concluída', () async {
+    final dia = await criarDia();
+    final flexao = await db.into(db.exercises).insert(
+          ExercisesCompanion.insert(nome: 'Flexão'),
+        );
+
+    final s1 = await repo.startSession(dia);
+    await repo.logSet(s1, flexao, numeroSerie: 1, repsFeitas: 10, cargaOuRpe: 0);
+    await repo.logSet(s1, flexao, numeroSerie: 2, repsFeitas: 12, cargaOuRpe: 5);
+    await repo.finishSession(s1);
+
+    // sessão em andamento não deve entrar
+    final s2 = await repo.startSession(dia);
+    await repo.logSet(s2, flexao, numeroSerie: 1, repsFeitas: 99);
+
+    final pontos = await repo.getExerciseEvolution(flexao);
+    expect(pontos, hasLength(1));
+    expect(pontos.single.maxReps, 12);
+    expect(pontos.single.maxCarga, 5);
+  });
 }

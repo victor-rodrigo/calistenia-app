@@ -23,6 +23,8 @@ class ScaffoldWithNav extends StatelessWidget {
           NavigationDestination(
               icon: Icon(Icons.emoji_events), label: 'Skills'),
           NavigationDestination(icon: Icon(Icons.history), label: 'Histórico'),
+          NavigationDestination(
+              icon: Icon(Icons.show_chart), label: 'Progresso'),
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'core/theme.dart';
 import 'features/exercises/exercises_screen.dart';
 import 'features/history/history_screen.dart';
 import 'features/routines/routines_screen.dart';
+import 'features/progress/progress_screen.dart';
 import 'features/shell/scaffold_with_nav.dart';
 import 'features/skills/skills_screen.dart';
 
@@ -44,6 +45,14 @@ final _router = GoRouter(
             GoRoute(
               path: '/historico',
               builder: (context, state) => const HistoryScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/progresso',
+              builder: (context, state) => const ProgressScreen(),
             ),
           ],
         ),

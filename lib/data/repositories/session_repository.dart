@@ -23,6 +23,18 @@ class SetLogView {
   final Exercise exercise;
 }
 
+class ExerciseEvolutionPoint {
+  const ExerciseEvolutionPoint({
+    required this.data,
+    this.maxReps,
+    this.maxCarga,
+  });
+
+  final DateTime data;
+  final int? maxReps;
+  final double? maxCarga;
+}
+
 class SessionRepository {
   SessionRepository(this._db);
 
@@ -75,6 +87,27 @@ class SessionRepository {
   Future<List<SessionSummary>> getCompletedSessions() {
     final (query, count) = _completedQuery();
     return query.get().then((rows) => _mapSummaries(rows, count));
+  }
+
+  Future<List<ExerciseEvolutionPoint>> getExerciseEvolution(int exerciseId) {
+    final maxReps = _db.setLogs.repsFeitas.max();
+    final maxCarga = _db.setLogs.cargaOuRpe.max();
+    final query = _db.select(_db.setLogs).join([
+      innerJoin(_db.workoutSessions,
+          _db.workoutSessions.id.equalsExp(_db.setLogs.sessionId)),
+    ])
+      ..where(_db.setLogs.exerciseId.equals(exerciseId) &
+          _db.workoutSessions.status.equals('concluida'))
+      ..groupBy([_db.workoutSessions.id])
+      ..orderBy([OrderingTerm(expression: _db.workoutSessions.data)]);
+    query.addColumns([maxReps, maxCarga]);
+    return query
+        .map((row) => ExerciseEvolutionPoint(
+              data: row.readTable(_db.workoutSessions).data,
+              maxReps: row.read(maxReps),
+              maxCarga: row.read(maxCarga),
+            ))
+        .get();
   }
 
   Future<List<SetLogView>> getSessionSetLogs(int sessionId) {
