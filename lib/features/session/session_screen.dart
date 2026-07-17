@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/feedback.dart';
 import '../../data/database/database.dart';
 import '../../data/repositories/routine_repository.dart';
 import '../routines/routines_providers.dart';
+import 'isometry_timer_screen.dart';
 import 'session_providers.dart';
 import 'set_log_dialog.dart';
 
@@ -39,6 +41,7 @@ class _SessionScreenState extends ConsumerState<SessionScreen> {
         if (restante <= 0) {
           _descansoRestante = null;
           t.cancel();
+          TimerFeedback.alerta();
         } else {
           _descansoRestante = restante;
         }
@@ -52,6 +55,11 @@ class _SessionScreenState extends ConsumerState<SessionScreen> {
   }
 
   Future<void> _registrar(RoutineExerciseView view, int serie) async {
+    if (view.exercise.tipo == 'tempo') {
+      await _registrarIsometria(view, serie);
+      return;
+    }
+
     final input = await showSetLogDialog(
       context,
       exercise: view.exercise,
@@ -68,6 +76,25 @@ class _SessionScreenState extends ConsumerState<SessionScreen> {
           repsFeitas: input.repsFeitas,
           duracaoSeg: input.duracaoSeg,
           cargaOuRpe: input.cargaOuRpe,
+        );
+    _iniciarDescanso(view.item.descansoSeg);
+  }
+
+  Future<void> _registrarIsometria(RoutineExerciseView view, int serie) async {
+    final alvo = view.item.duracaoAlvoSeg ?? 30;
+    final segundos = await Navigator.of(context).push<int>(
+      MaterialPageRoute(
+        builder: (_) =>
+            IsometryTimerScreen(exercise: view.exercise, alvoSeg: alvo),
+      ),
+    );
+    if (segundos == null) return;
+
+    await ref.read(sessionRepositoryProvider).logSet(
+          widget.sessionId,
+          view.exercise.id,
+          numeroSerie: serie,
+          duracaoSeg: segundos,
         );
     _iniciarDescanso(view.item.descansoSeg);
   }

@@ -40,6 +40,8 @@ dependencies:
   drift_flutter: ^0.3.0
   path_provider: ^2.1.6
   sqlite3_flutter_libs: ^0.6.0+eol
+  fl_chart: ^1.2.0
+  audioplayers: ^6.8.1
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +70,7 @@ flutter:
   assets:
     - assets/exercicios_calistenia.json
     - assets/exercicios/
+    - assets/sounds/
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
