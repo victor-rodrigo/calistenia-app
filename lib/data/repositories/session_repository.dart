@@ -2,6 +2,27 @@ import 'package:drift/drift.dart';
 
 import '../database/database.dart';
 
+class SessionSummary {
+  const SessionSummary({
+    required this.session,
+    this.diaNome,
+    this.fichaNome,
+    required this.totalSeries,
+  });
+
+  final WorkoutSession session;
+  final String? diaNome;
+  final String? fichaNome;
+  final int totalSeries;
+}
+
+class SetLogView {
+  const SetLogView({required this.log, required this.exercise});
+
+  final SetLog log;
+  final Exercise exercise;
+}
+
 class SessionRepository {
   SessionRepository(this._db);
 
@@ -45,6 +66,65 @@ class SessionRepository {
   Future<void> finishSession(int id) =>
       (_db.update(_db.workoutSessions)..where((s) => s.id.equals(id)))
           .write(const WorkoutSessionsCompanion(status: Value('concluida')));
+
+  Stream<List<SessionSummary>> watchCompletedSessions() {
+    final (query, count) = _completedQuery();
+    return query.watch().map((rows) => _mapSummaries(rows, count));
+  }
+
+  Future<List<SessionSummary>> getCompletedSessions() {
+    final (query, count) = _completedQuery();
+    return query.get().then((rows) => _mapSummaries(rows, count));
+  }
+
+  Future<List<SetLogView>> getSessionSetLogs(int sessionId) {
+    final query = _db.select(_db.setLogs).join([
+      innerJoin(_db.exercises,
+          _db.exercises.id.equalsExp(_db.setLogs.exerciseId)),
+    ])
+      ..where(_db.setLogs.sessionId.equals(sessionId))
+      ..orderBy([
+        OrderingTerm(expression: _db.setLogs.exerciseId),
+        OrderingTerm(expression: _db.setLogs.numeroSerie),
+      ]);
+    return query
+        .map((row) => SetLogView(
+              log: row.readTable(_db.setLogs),
+              exercise: row.readTable(_db.exercises),
+            ))
+        .get();
+  }
+
+  (JoinedSelectStatement, Expression<int>) _completedQuery() {
+    final count = _db.setLogs.id.count();
+    final query = _db.select(_db.workoutSessions).join([
+      leftOuterJoin(_db.routineDays,
+          _db.routineDays.id.equalsExp(_db.workoutSessions.routineDayId)),
+      leftOuterJoin(_db.routines,
+          _db.routines.id.equalsExp(_db.routineDays.routineId)),
+      leftOuterJoin(
+          _db.setLogs, _db.setLogs.sessionId.equalsExp(_db.workoutSessions.id)),
+    ])
+      ..where(_db.workoutSessions.status.equals('concluida'))
+      ..groupBy([_db.workoutSessions.id])
+      ..orderBy([OrderingTerm.desc(_db.workoutSessions.data)]);
+    query.addColumns([count]);
+    return (query, count);
+  }
+
+  List<SessionSummary> _mapSummaries(
+    List<TypedResult> rows,
+    Expression<int> count,
+  ) =>
+      [
+        for (final row in rows)
+          SessionSummary(
+            session: row.readTable(_db.workoutSessions),
+            diaNome: row.readTableOrNull(_db.routineDays)?.nome,
+            fichaNome: row.readTableOrNull(_db.routines)?.nome,
+            totalSeries: row.read(count) ?? 0,
+          ),
+      ];
 
   SimpleSelectStatement<$SetLogsTable, SetLog> _logs(int sessionId) =>
       _db.select(_db.setLogs)..where((l) => l.sessionId.equals(sessionId));

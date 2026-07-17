@@ -59,4 +59,36 @@ void main() {
 
     expect((await repo.getSession(id))!.status, 'concluida');
   });
+
+  test('lista só sessões concluídas com resumo', () async {
+    final dia = await criarDia();
+    final flexao = await db.into(db.exercises).insert(
+          ExercisesCompanion.insert(nome: 'Flexão'),
+        );
+    final s = await repo.startSession(dia);
+    await repo.logSet(s, flexao, numeroSerie: 1, repsFeitas: 10);
+    await repo.logSet(s, flexao, numeroSerie: 2, repsFeitas: 9);
+    await repo.finishSession(s);
+    await repo.startSession(dia); // em andamento, não deve aparecer
+
+    final concluidas = await repo.getCompletedSessions();
+    expect(concluidas, hasLength(1));
+    expect(concluidas.single.totalSeries, 2);
+    expect(concluidas.single.diaNome, 'Push');
+    expect(concluidas.single.fichaNome, 'PPL');
+  });
+
+  test('detalhe da sessão traz logs com nome do exercício', () async {
+    final dia = await criarDia();
+    final flexao = await db.into(db.exercises).insert(
+          ExercisesCompanion.insert(nome: 'Flexão'),
+        );
+    final s = await repo.startSession(dia);
+    await repo.logSet(s, flexao, numeroSerie: 1, repsFeitas: 10);
+
+    final logs = await repo.getSessionSetLogs(s);
+    expect(logs, hasLength(1));
+    expect(logs.single.exercise.nome, 'Flexão');
+    expect(logs.single.log.repsFeitas, 10);
+  });
 }
