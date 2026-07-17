@@ -17,7 +17,7 @@ class ScaffoldWithNav extends StatelessWidget {
           initialLocation: index == navigationShell.currentIndex,
         ),
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.list_alt), label: 'Fichas'),
+          NavigationDestination(icon: Icon(Icons.list_alt), label: 'Treinos'),
           NavigationDestination(
               icon: Icon(Icons.fitness_center), label: 'Exercícios'),
           NavigationDestination(

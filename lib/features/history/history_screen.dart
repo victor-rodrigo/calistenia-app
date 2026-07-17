@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import '../../core/format.dart';
 import '../../core/ui.dart';
@@ -7,11 +8,21 @@ import '../../data/repositories/session_repository.dart';
 import 'history_detail_screen.dart';
 import 'history_providers.dart';
 
-class HistoryScreen extends ConsumerWidget {
+class HistoryScreen extends ConsumerStatefulWidget {
   const HistoryScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+class _HistoryScreenState extends ConsumerState<HistoryScreen> {
+  DateTime _focado = DateTime.now();
+  DateTime? _selecionado;
+
+  String _chave(DateTime d) => '${d.year}-${d.month}-${d.day}';
+
+  @override
+  Widget build(BuildContext context) {
     final sessions = ref.watch(completedSessionsProvider);
 
     return Scaffold(
@@ -24,12 +35,49 @@ class HistoryScreen extends ConsumerWidget {
             return const EmptyMessage(
               icon: Icons.history,
               titulo: 'Nenhum treino registrado',
-              subtitulo: 'Inicie um treino por uma ficha para ver aqui',
+              subtitulo: 'Inicie um treino para ver aqui',
             );
           }
-          return ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (context, i) => _SessionTile(summary: list[i]),
+
+          final porDia = <String, List<SessionSummary>>{};
+          for (final s in list) {
+            porDia.putIfAbsent(_chave(s.session.data), () => []).add(s);
+          }
+
+          final visiveis = _selecionado == null
+              ? list
+              : porDia[_chave(_selecionado!)] ?? const [];
+
+          return Column(
+            children: [
+              TableCalendar<SessionSummary>(
+                firstDay: DateTime.utc(2020, 1, 1),
+                lastDay: DateTime.utc(2100, 12, 31),
+                focusedDay: _focado,
+                startingDayOfWeek: StartingDayOfWeek.monday,
+                availableCalendarFormats: const {CalendarFormat.month: 'Mês'},
+                selectedDayPredicate: (d) => isSameDay(_selecionado, d),
+                eventLoader: (day) => porDia[_chave(day)] ?? const [],
+                headerStyle: const HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                ),
+                onDaySelected: (sel, foc) => setState(() {
+                  _selecionado = isSameDay(_selecionado, sel) ? null : sel;
+                  _focado = foc;
+                }),
+              ),
+              const Divider(height: 1),
+              Expanded(
+                child: visiveis.isEmpty
+                    ? const Center(child: Text('Nenhum treino nesse dia'))
+                    : ListView.builder(
+                        itemCount: visiveis.length,
+                        itemBuilder: (context, i) =>
+                            _SessionTile(summary: visiveis[i]),
+                      ),
+              ),
+            ],
           );
         },
       ),
@@ -44,9 +92,8 @@ class _SessionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titulo = [summary.diaNome, summary.fichaNome]
-        .whereType<String>()
-        .join(' · ');
+    final titulo =
+        [summary.diaNome, summary.fichaNome].whereType<String>().join(' · ');
 
     return ListTile(
       leading: const Icon(Icons.check_circle_outline),

@@ -41,6 +41,6 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Nenhuma ficha ainda'), findsOneWidget);
+    expect(find.text('Nenhum treino ainda'), findsOneWidget);
   });
 }

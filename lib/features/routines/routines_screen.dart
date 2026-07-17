@@ -14,7 +14,7 @@ class RoutinesScreen extends ConsumerWidget {
     final routines = ref.watch(routinesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Fichas')),
+      appBar: AppBar(title: const Text('Treinos')),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _create(context, ref),
         child: const Icon(Icons.add),
@@ -26,8 +26,8 @@ class RoutinesScreen extends ConsumerWidget {
           if (list.isEmpty) {
             return const EmptyMessage(
               icon: Icons.list_alt,
-              titulo: 'Nenhuma ficha ainda',
-              subtitulo: 'Toque em + para criar sua primeira ficha',
+              titulo: 'Nenhum treino ainda',
+              subtitulo: 'Toque em + para criar seu primeiro treino',
             );
           }
           return ListView(
@@ -40,7 +40,7 @@ class RoutinesScreen extends ConsumerWidget {
   }
 
   Future<void> _create(BuildContext context, WidgetRef ref) async {
-    final nome = await promptText(context, titulo: 'Nova ficha', label: 'Nome');
+    final nome = await promptText(context, titulo: 'Novo treino', label: 'Nome');
     if (nome != null && nome.isNotEmpty) {
       await ref.read(routineRepositoryProvider).createRoutine(nome: nome);
     }
