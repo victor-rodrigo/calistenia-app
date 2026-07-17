@@ -4,12 +4,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app.dart';
 import 'data/database/database_provider.dart';
 import 'data/database/seed.dart';
+import 'data/database/skill_seed.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final container = ProviderContainer();
-  await seedFromAsset(container.read(databaseProvider));
+  final db = container.read(databaseProvider);
+  await seedFromAsset(db);
+  await seedDefaultSkills(db);
 
   runApp(
     UncontrolledProviderScope(
