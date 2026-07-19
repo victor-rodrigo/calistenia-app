@@ -69,7 +69,7 @@ class TreinoApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Treino',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
+      theme: AppTheme.theme,
       routerConfig: _router,
     );
   }

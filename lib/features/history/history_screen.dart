@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../core/cartoon.dart';
 import '../../core/format.dart';
+import '../../core/theme.dart';
 import '../../core/ui.dart';
 import '../../data/repositories/session_repository.dart';
 import 'history_detail_screen.dart';
@@ -58,9 +60,31 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                 availableCalendarFormats: const {CalendarFormat.month: 'Mês'},
                 selectedDayPredicate: (d) => isSameDay(_selecionado, d),
                 eventLoader: (day) => porDia[_chave(day)] ?? const [],
-                headerStyle: const HeaderStyle(
+                headerStyle: HeaderStyle(
                   formatButtonVisible: false,
                   titleCentered: true,
+                  titleTextStyle: baloo(18, 800),
+                  leftChevronIcon:
+                      const Icon(Icons.chevron_left_rounded, color: AppColors.ink),
+                  rightChevronIcon: const Icon(Icons.chevron_right_rounded,
+                      color: AppColors.ink),
+                ),
+                calendarStyle: CalendarStyle(
+                  markersMaxCount: 1,
+                  markerDecoration: const BoxDecoration(
+                      color: AppColors.teal, shape: BoxShape.circle),
+                  todayDecoration: BoxDecoration(
+                    color: AppColors.mustard,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.ink, width: 2),
+                  ),
+                  todayTextStyle: baloo(14, 700),
+                  selectedDecoration: BoxDecoration(
+                    color: AppColors.red,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.ink, width: 2),
+                  ),
+                  selectedTextStyle: baloo(14, 700, color: AppColors.card),
                 ),
                 onDaySelected: (sel, foc) => setState(() {
                   _selecionado = isSameDay(_selecionado, sel) ? null : sel;
@@ -71,8 +95,10 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               Expanded(
                 child: visiveis.isEmpty
                     ? const Center(child: Text('Nenhum treino nesse dia'))
-                    : ListView.builder(
+                    : ListView.separated(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
                         itemCount: visiveis.length,
+                        separatorBuilder: (_, _) => const SizedBox(height: 12),
                         itemBuilder: (context, i) =>
                             _SessionTile(summary: visiveis[i]),
                       ),
@@ -95,15 +121,31 @@ class _SessionTile extends StatelessWidget {
     final titulo =
         [summary.diaNome, summary.fichaNome].whereType<String>().join(' · ');
 
-    return ListTile(
-      leading: const Icon(Icons.check_circle_outline),
-      title: Text(titulo.isEmpty ? 'Treino' : titulo),
-      subtitle: Text(formatDataHora(summary.session.data)),
-      trailing: Text('${summary.totalSeries} séries'),
+    return StickerCard(
+      padding: const EdgeInsets.all(12),
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => HistoryDetailScreen(summary: summary),
         ),
+      ),
+      child: Row(
+        children: [
+          const CartoonBadge(
+              icon: Icons.check_rounded, color: AppColors.teal, size: 42),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(titulo.isEmpty ? 'Treino' : titulo,
+                    style: Theme.of(context).textTheme.titleMedium),
+                Text(formatDataHora(summary.session.data),
+                    style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ),
+          ),
+          Text('${summary.totalSeries} séries', style: baloo(14, 700)),
+        ],
       ),
     );
   }

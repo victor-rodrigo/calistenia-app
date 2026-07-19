@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/cartoon.dart';
 import '../../core/feedback.dart';
+import '../../core/theme.dart';
 import '../../data/database/database.dart';
 import '../../data/repositories/routine_repository.dart';
 import '../routines/routines_providers.dart';
@@ -186,15 +188,16 @@ class _ExerciseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = view.item;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: StickerCard(
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(view.exercise.nome,
-                style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(height: 8),
+                style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 6),
             for (var serie = 1; serie <= item.seriesAlvo; serie++)
               _SerieRow(
                 serie: serie,
@@ -239,18 +242,21 @@ class _SerieRow extends StatelessWidget {
       return ListTile(
         dense: true,
         contentPadding: EdgeInsets.zero,
-        leading: const Icon(Icons.check_circle, color: Colors.green),
-        title: Text('Série $serie'),
-        trailing: Text('$feito$carga'),
+        leading: const Icon(Icons.check_circle_rounded, color: AppColors.teal),
+        title: Text('Série $serie',
+            style: Theme.of(context).textTheme.titleSmall),
+        trailing: Text('$feito$carga', style: baloo(15, 800)),
       );
     }
     return ListTile(
       dense: true,
       contentPadding: EdgeInsets.zero,
-      leading: const Icon(Icons.radio_button_unchecked),
-      title: Text('Série $serie'),
+      leading: const Icon(Icons.radio_button_unchecked_rounded,
+          color: AppColors.sepia),
+      title: Text('Série $serie',
+          style: Theme.of(context).textTheme.titleSmall),
       subtitle: alvo.isEmpty ? null : Text('alvo: $alvo'),
-      trailing: FilledButton.tonal(
+      trailing: FilledButton(
         onPressed: onRegistrar,
         child: const Text('Registrar'),
       ),
@@ -271,19 +277,25 @@ class _RestBar extends StatelessWidget {
     final min = segundos ~/ 60;
     final sec = (segundos % 60).toString().padLeft(2, '0');
     return Material(
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: AppColors.mustard,
+      shape: const Border(top: BorderSide(color: AppColors.ink, width: 2.5)),
       child: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
           child: Row(
             children: [
-              const Icon(Icons.timer_outlined),
-              const SizedBox(width: 12),
-              Text('Descanso: $min:$sec',
-                  style: Theme.of(context).textTheme.titleMedium),
+              const Icon(Icons.timer_rounded, color: AppColors.ink),
+              const SizedBox(width: 10),
+              Text('Descanso', style: baloo(16, 700)),
               const Spacer(),
-              TextButton(onPressed: onSkip, child: const Text('Pular')),
+              Text('$min:$sec', style: baloo(24, 800)),
+              const SizedBox(width: 12),
+              TextButton(
+                onPressed: onSkip,
+                style: TextButton.styleFrom(foregroundColor: AppColors.ink),
+                child: const Text('Pular'),
+              ),
             ],
           ),
         ),

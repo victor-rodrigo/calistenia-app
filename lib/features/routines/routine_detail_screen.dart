@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/cartoon.dart';
+import '../../core/theme.dart';
 import '../../core/ui.dart';
 import '../../data/database/database.dart';
 import '../../data/repositories/routine_repository.dart';
@@ -68,53 +70,57 @@ class _DaySection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final exercicios = ref.watch(dayExercisesProvider(day.id));
 
-    return Card(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: StickerCard(
+      padding: const EdgeInsets.fromLTRB(16, 12, 10, 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ListTile(
-            title: Text(day.nome,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.play_arrow),
-                  tooltip: 'Iniciar treino',
-                  onPressed: () => _startWorkout(context, ref),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  tooltip: 'Adicionar exercício',
-                  onPressed: () => _addExercise(context, ref),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete_outline),
-                  tooltip: 'Excluir dia',
-                  onPressed: () async {
-                    final ok = await confirmDelete(context, 'Excluir "${day.nome}"?');
-                    if (ok) {
-                      await ref.read(routineRepositoryProvider).deleteDay(day.id);
-                    }
-                  },
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(day.nome,
+                    style: Theme.of(context).textTheme.titleLarge),
+              ),
+              CartoonRoundButton(
+                icon: isTeste
+                    ? Icons.emoji_events_rounded
+                    : Icons.play_arrow_rounded,
+                size: 40,
+                tooltip: isTeste ? 'Fazer teste' : 'Iniciar treino',
+                onPressed: () => _startWorkout(context, ref),
+              ),
+              IconButton(
+                icon: const Icon(Icons.add_rounded),
+                tooltip: 'Adicionar exercício',
+                onPressed: () => _addExercise(context, ref),
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete_outline_rounded),
+                tooltip: 'Excluir dia',
+                onPressed: () async {
+                  final ok =
+                      await confirmDelete(context, 'Excluir "${day.nome}"?');
+                  if (ok) {
+                    await ref.read(routineRepositoryProvider).deleteDay(day.id);
+                  }
+                },
+              ),
+            ],
           ),
           exercicios.when(
             loading: () => const Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(12),
               child: Center(child: CircularProgressIndicator()),
             ),
-            error: (e, _) => Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text('Erro: $e'),
-            ),
+            error: (e, _) => Text('Erro: $e'),
             data: (itens) {
               if (itens.isEmpty) {
-                return const Padding(
-                  padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  child: Text('Sem exercícios'),
+                return Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text('Sem exercícios',
+                      style: Theme.of(context).textTheme.bodySmall),
                 );
               }
               return Column(
@@ -123,6 +129,7 @@ class _DaySection extends ConsumerWidget {
             },
           ),
         ],
+      ),
       ),
     );
   }
@@ -181,10 +188,13 @@ class _ExerciseRow extends ConsumerWidget {
 
     return ListTile(
       dense: true,
-      title: Text(view.exercise.nome),
+      contentPadding: EdgeInsets.zero,
+      title: Text(view.exercise.nome,
+          style: Theme.of(context).textTheme.titleSmall),
       subtitle: Text('$alvo · descanso ${item.descansoSeg}s'),
       trailing: IconButton(
-        icon: const Icon(Icons.close),
+        icon: const Icon(Icons.close_rounded),
+        color: AppColors.sepia,
         onPressed: () =>
             ref.read(routineRepositoryProvider).deleteExercise(item.id),
       ),

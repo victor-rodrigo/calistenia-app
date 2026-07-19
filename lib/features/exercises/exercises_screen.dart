@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/cartoon.dart';
+import '../../core/theme.dart';
+import '../../core/ui.dart';
 import '../../data/database/database.dart';
 import 'exercise_form_screen.dart';
 import 'exercise_type.dart';
@@ -17,16 +20,23 @@ class ExercisesScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text('Exercícios')),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _openForm(context),
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add_rounded),
       ),
       body: exercises.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Erro: $e')),
         data: (list) {
-          if (list.isEmpty) return const _EmptyState();
-          return ListView.builder(
-            padding: const EdgeInsets.only(bottom: 88),
+          if (list.isEmpty) {
+            return const EmptyMessage(
+              icon: Icons.fitness_center_rounded,
+              titulo: 'Nenhum exercício ainda',
+              subtitulo: 'Toque em + para adicionar',
+            );
+          }
+          return ListView.separated(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
             itemCount: list.length,
+            separatorBuilder: (_, _) => const SizedBox(height: 12),
             itemBuilder: (context, i) => _ExerciseTile(exercise: list[i]),
           );
         },
@@ -47,14 +57,28 @@ class _ExerciseTile extends ConsumerWidget {
       tipoLabel(exercise.tipo),
     ].join(' · ');
 
-    return ListTile(
-      leading: _Thumb(imagem: exercise.imagem),
-      title: Text(exercise.nome),
-      subtitle: Text(subtitle),
+    return StickerCard(
+      padding: const EdgeInsets.all(10),
       onTap: () => _openForm(context, exercise),
-      trailing: IconButton(
-        icon: const Icon(Icons.delete_outline),
-        onPressed: () => _confirmDelete(context, ref, exercise),
+      child: Row(
+        children: [
+          _Thumb(imagem: exercise.imagem),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(exercise.nome,
+                    style: Theme.of(context).textTheme.titleMedium),
+                Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete_outline_rounded),
+            onPressed: () => _confirmDelete(context, ref, exercise),
+          ),
+        ],
       ),
     );
   }
@@ -67,50 +91,30 @@ class _Thumb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const size = 48.0;
-    if (imagem == null) {
-      return const SizedBox(
-        width: size,
-        height: size,
-        child: Icon(Icons.fitness_center),
-      );
-    }
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(6),
-      child: Image.asset(
-        imagem!,
-        width: size,
-        height: size,
-        fit: BoxFit.cover,
-        errorBuilder: (_, _, _) => const SizedBox(
-          width: size,
-          height: size,
-          child: Icon(Icons.fitness_center),
-        ),
-      ),
+    const size = 52.0;
+    final placeholder = Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      color: AppColors.paperDeep,
+      child: const Icon(Icons.fitness_center_rounded, color: AppColors.ink),
     );
-  }
-}
 
-class _EmptyState extends StatelessWidget {
-  const _EmptyState();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.fitness_center, size: 56),
-            SizedBox(height: 12),
-            Text('Nenhum exercício ainda'),
-            SizedBox(height: 4),
-            Text('Toque em + para adicionar', textAlign: TextAlign.center),
-          ],
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.ink, width: 2),
       ),
+      clipBehavior: Clip.antiAlias,
+      child: imagem == null
+          ? placeholder
+          : Image.asset(
+              imagem!,
+              width: size,
+              height: size,
+              fit: BoxFit.cover,
+              errorBuilder: (_, _, _) => placeholder,
+            ),
     );
   }
 }
@@ -126,25 +130,8 @@ Future<void> _confirmDelete(
   WidgetRef ref,
   Exercise exercise,
 ) async {
-  final ok = await showDialog<bool>(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text('Excluir "${exercise.nome}"?'),
-      content: const Text('Essa ação não pode ser desfeita.'),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context, false),
-          child: const Text('Cancelar'),
-        ),
-        FilledButton(
-          onPressed: () => Navigator.pop(context, true),
-          child: const Text('Excluir'),
-        ),
-      ],
-    ),
-  );
-
-  if (ok ?? false) {
+  final ok = await confirmDelete(context, 'Excluir "${exercise.nome}"?');
+  if (ok) {
     await ref.read(exerciseRepositoryProvider).delete(exercise.id);
   }
 }
