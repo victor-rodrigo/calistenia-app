@@ -2,6 +2,8 @@ import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/theme.dart';
+import '../../core/youtube.dart';
 import '../../data/database/database.dart';
 import 'exercise_type.dart';
 import 'exercises_providers.dart';
@@ -40,6 +42,22 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
     _grupo.dispose();
     _notas.dispose();
     super.dispose();
+  }
+
+  Future<void> _abrirYoutube() async {
+    final nome = _nome.text.trim();
+    if (nome.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Dê um nome ao exercício primeiro')),
+      );
+      return;
+    }
+    final ok = await abrirTutorialYoutube(nome);
+    if (!ok && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Não consegui abrir o YouTube')),
+      );
+    }
   }
 
   Future<void> _salvar() async {
@@ -88,6 +106,13 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
               textCapitalization: TextCapitalization.sentences,
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? 'Informe um nome' : null,
+            ),
+            const SizedBox(height: 12),
+            FilledButton.icon(
+              onPressed: _abrirYoutube,
+              icon: const Icon(Icons.smart_display_rounded),
+              label: const Text('Ver no YouTube'),
+              style: FilledButton.styleFrom(backgroundColor: AppColors.teal),
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(

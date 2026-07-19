@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/cartoon.dart';
 import '../../core/theme.dart';
 import '../../core/ui.dart';
+import '../../core/youtube.dart';
 import '../../data/database/database.dart';
 import 'exercise_form_screen.dart';
 import 'exercise_type.dart';
@@ -73,6 +74,12 @@ class _ExerciseTile extends ConsumerWidget {
                 Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.smart_display_rounded),
+            color: AppColors.teal,
+            tooltip: 'Ver no YouTube',
+            onPressed: () => abrirTutorialYoutube(exercise.nome),
           ),
           IconButton(
             icon: const Icon(Icons.delete_outline_rounded),

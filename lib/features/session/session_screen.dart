@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/cartoon.dart';
 import '../../core/feedback.dart';
 import '../../core/theme.dart';
+import '../../core/youtube.dart';
 import '../../data/database/database.dart';
 import '../../data/repositories/routine_repository.dart';
 import '../routines/routines_providers.dart';
@@ -195,9 +196,22 @@ class _ExerciseCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(view.exercise.nome,
-                style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 6),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(view.exercise.nome,
+                      style: Theme.of(context).textTheme.titleLarge),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.smart_display_rounded),
+                  color: AppColors.teal,
+                  tooltip: 'Ver no YouTube',
+                  visualDensity: VisualDensity.compact,
+                  onPressed: () => abrirTutorialYoutube(view.exercise.nome),
+                ),
+              ],
+            ),
+            const SizedBox(height: 2),
             for (var serie = 1; serie <= item.seriesAlvo; serie++)
               _SerieRow(
                 serie: serie,
