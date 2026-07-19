@@ -80,7 +80,7 @@ flutter:
 
   assets:
     - assets/exercicios_calistenia.json
-    - assets/exercicios/
+    - assets/muscles/
     - assets/sounds/
 
   fonts:

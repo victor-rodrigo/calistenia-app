@@ -53,3 +53,6 @@ app.*.map.json
 
 # Local
 CLAUDE.md
+
+# Imagens de músculo (wger, AGPL) — bundladas localmente, não redistribuídas
+assets/muscles/

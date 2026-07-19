@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/muscles.dart';
 import '../../core/theme.dart';
 import '../../core/youtube.dart';
 import '../../data/database/database.dart';
@@ -99,6 +100,10 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            if (muscleImageFor(_grupo.text.trim()) case final img?)
+              Center(
+                child: Image.asset(img, height: 150, fit: BoxFit.contain),
+              ),
             TextFormField(
               controller: _nome,
               autofocus: !_editando,
@@ -130,6 +135,7 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
               decoration:
                   const InputDecoration(labelText: 'Grupo muscular (opcional)'),
               textCapitalization: TextCapitalization.sentences,
+              onChanged: (_) => setState(() {}),
             ),
             const SizedBox(height: 16),
             TextFormField(

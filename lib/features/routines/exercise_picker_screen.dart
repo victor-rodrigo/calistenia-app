@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/muscles.dart';
 import '../../data/database/database.dart';
 import '../exercises/exercises_providers.dart';
 
@@ -50,7 +51,7 @@ class _ExercisePickerScreenState extends ConsumerState<ExercisePickerScreen> {
                   itemBuilder: (context, i) {
                     final e = filtrados[i];
                     return ListTile(
-                      leading: _thumb(e.imagem),
+                      leading: _thumb(muscleImageFor(e.grupoMuscular)),
                       title: Text(e.nome),
                       subtitle:
                           e.grupoMuscular == null ? null : Text(e.grupoMuscular!),
@@ -70,18 +71,10 @@ class _ExercisePickerScreenState extends ConsumerState<ExercisePickerScreen> {
     const size = 44.0;
     if (imagem == null) {
       return const SizedBox(
-          width: size, height: size, child: Icon(Icons.fitness_center));
+          width: size,
+          height: size,
+          child: Icon(Icons.fitness_center_rounded));
     }
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(6),
-      child: Image.asset(
-        imagem,
-        width: size,
-        height: size,
-        fit: BoxFit.cover,
-        errorBuilder: (_, _, _) => const SizedBox(
-            width: size, height: size, child: Icon(Icons.fitness_center)),
-      ),
-    );
+    return Image.asset(imagem, width: size, height: size, fit: BoxFit.contain);
   }
 }
