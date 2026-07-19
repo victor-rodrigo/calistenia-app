@@ -28,6 +28,12 @@ void main() {
     expect(all.single.descricao, 'iniciante');
   });
 
+  test('cria ficha marcada como teste', () async {
+    await repo.createRoutine(nome: 'Teste inicial', isTeste: true);
+    final ficha = (await repo.getRoutines()).single;
+    expect(ficha.isTeste, isTrue);
+  });
+
   test('adiciona dias com ordem incremental', () async {
     final ficha = await repo.createRoutine(nome: 'PPL');
     await repo.addDay(ficha, 'Push');

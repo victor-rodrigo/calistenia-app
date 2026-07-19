@@ -504,8 +504,23 @@ class $RoutinesTable extends Routines with TableInfo<$RoutinesTable, Routine> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _isTesteMeta = const VerificationMeta(
+    'isTeste',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, nome, descricao];
+  late final GeneratedColumn<bool> isTeste = GeneratedColumn<bool>(
+    'is_teste',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_teste" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, nome, descricao, isTeste];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -535,6 +550,12 @@ class $RoutinesTable extends Routines with TableInfo<$RoutinesTable, Routine> {
         descricao.isAcceptableOrUnknown(data['descricao']!, _descricaoMeta),
       );
     }
+    if (data.containsKey('is_teste')) {
+      context.handle(
+        _isTesteMeta,
+        isTeste.isAcceptableOrUnknown(data['is_teste']!, _isTesteMeta),
+      );
+    }
     return context;
   }
 
@@ -556,6 +577,10 @@ class $RoutinesTable extends Routines with TableInfo<$RoutinesTable, Routine> {
         DriftSqlType.string,
         data['${effectivePrefix}descricao'],
       ),
+      isTeste: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_teste'],
+      )!,
     );
   }
 
@@ -569,7 +594,13 @@ class Routine extends DataClass implements Insertable<Routine> {
   final int id;
   final String nome;
   final String? descricao;
-  const Routine({required this.id, required this.nome, this.descricao});
+  final bool isTeste;
+  const Routine({
+    required this.id,
+    required this.nome,
+    this.descricao,
+    required this.isTeste,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -578,6 +609,7 @@ class Routine extends DataClass implements Insertable<Routine> {
     if (!nullToAbsent || descricao != null) {
       map['descricao'] = Variable<String>(descricao);
     }
+    map['is_teste'] = Variable<bool>(isTeste);
     return map;
   }
 
@@ -588,6 +620,7 @@ class Routine extends DataClass implements Insertable<Routine> {
       descricao: descricao == null && nullToAbsent
           ? const Value.absent()
           : Value(descricao),
+      isTeste: Value(isTeste),
     );
   }
 
@@ -600,6 +633,7 @@ class Routine extends DataClass implements Insertable<Routine> {
       id: serializer.fromJson<int>(json['id']),
       nome: serializer.fromJson<String>(json['nome']),
       descricao: serializer.fromJson<String?>(json['descricao']),
+      isTeste: serializer.fromJson<bool>(json['isTeste']),
     );
   }
   @override
@@ -609,6 +643,7 @@ class Routine extends DataClass implements Insertable<Routine> {
       'id': serializer.toJson<int>(id),
       'nome': serializer.toJson<String>(nome),
       'descricao': serializer.toJson<String?>(descricao),
+      'isTeste': serializer.toJson<bool>(isTeste),
     };
   }
 
@@ -616,16 +651,19 @@ class Routine extends DataClass implements Insertable<Routine> {
     int? id,
     String? nome,
     Value<String?> descricao = const Value.absent(),
+    bool? isTeste,
   }) => Routine(
     id: id ?? this.id,
     nome: nome ?? this.nome,
     descricao: descricao.present ? descricao.value : this.descricao,
+    isTeste: isTeste ?? this.isTeste,
   );
   Routine copyWithCompanion(RoutinesCompanion data) {
     return Routine(
       id: data.id.present ? data.id.value : this.id,
       nome: data.nome.present ? data.nome.value : this.nome,
       descricao: data.descricao.present ? data.descricao.value : this.descricao,
+      isTeste: data.isTeste.present ? data.isTeste.value : this.isTeste,
     );
   }
 
@@ -634,45 +672,52 @@ class Routine extends DataClass implements Insertable<Routine> {
     return (StringBuffer('Routine(')
           ..write('id: $id, ')
           ..write('nome: $nome, ')
-          ..write('descricao: $descricao')
+          ..write('descricao: $descricao, ')
+          ..write('isTeste: $isTeste')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, nome, descricao);
+  int get hashCode => Object.hash(id, nome, descricao, isTeste);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Routine &&
           other.id == this.id &&
           other.nome == this.nome &&
-          other.descricao == this.descricao);
+          other.descricao == this.descricao &&
+          other.isTeste == this.isTeste);
 }
 
 class RoutinesCompanion extends UpdateCompanion<Routine> {
   final Value<int> id;
   final Value<String> nome;
   final Value<String?> descricao;
+  final Value<bool> isTeste;
   const RoutinesCompanion({
     this.id = const Value.absent(),
     this.nome = const Value.absent(),
     this.descricao = const Value.absent(),
+    this.isTeste = const Value.absent(),
   });
   RoutinesCompanion.insert({
     this.id = const Value.absent(),
     required String nome,
     this.descricao = const Value.absent(),
+    this.isTeste = const Value.absent(),
   }) : nome = Value(nome);
   static Insertable<Routine> custom({
     Expression<int>? id,
     Expression<String>? nome,
     Expression<String>? descricao,
+    Expression<bool>? isTeste,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (nome != null) 'nome': nome,
       if (descricao != null) 'descricao': descricao,
+      if (isTeste != null) 'is_teste': isTeste,
     });
   }
 
@@ -680,11 +725,13 @@ class RoutinesCompanion extends UpdateCompanion<Routine> {
     Value<int>? id,
     Value<String>? nome,
     Value<String?>? descricao,
+    Value<bool>? isTeste,
   }) {
     return RoutinesCompanion(
       id: id ?? this.id,
       nome: nome ?? this.nome,
       descricao: descricao ?? this.descricao,
+      isTeste: isTeste ?? this.isTeste,
     );
   }
 
@@ -700,6 +747,9 @@ class RoutinesCompanion extends UpdateCompanion<Routine> {
     if (descricao.present) {
       map['descricao'] = Variable<String>(descricao.value);
     }
+    if (isTeste.present) {
+      map['is_teste'] = Variable<bool>(isTeste.value);
+    }
     return map;
   }
 
@@ -708,7 +758,8 @@ class RoutinesCompanion extends UpdateCompanion<Routine> {
     return (StringBuffer('RoutinesCompanion(')
           ..write('id: $id, ')
           ..write('nome: $nome, ')
-          ..write('descricao: $descricao')
+          ..write('descricao: $descricao, ')
+          ..write('isTeste: $isTeste')
           ..write(')'))
         .toString();
   }
@@ -3503,12 +3554,14 @@ typedef $$RoutinesTableCreateCompanionBuilder =
       Value<int> id,
       required String nome,
       Value<String?> descricao,
+      Value<bool> isTeste,
     });
 typedef $$RoutinesTableUpdateCompanionBuilder =
     RoutinesCompanion Function({
       Value<int> id,
       Value<String> nome,
       Value<String?> descricao,
+      Value<bool> isTeste,
     });
 
 final class $$RoutinesTableReferences
@@ -3555,6 +3608,11 @@ class $$RoutinesTableFilterComposer
 
   ColumnFilters<String> get descricao => $composableBuilder(
     column: $table.descricao,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isTeste => $composableBuilder(
+    column: $table.isTeste,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3607,6 +3665,11 @@ class $$RoutinesTableOrderingComposer
     column: $table.descricao,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get isTeste => $composableBuilder(
+    column: $table.isTeste,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$RoutinesTableAnnotationComposer
@@ -3626,6 +3689,9 @@ class $$RoutinesTableAnnotationComposer
 
   GeneratedColumn<String> get descricao =>
       $composableBuilder(column: $table.descricao, builder: (column) => column);
+
+  GeneratedColumn<bool> get isTeste =>
+      $composableBuilder(column: $table.isTeste, builder: (column) => column);
 
   Expression<T> routineDaysRefs<T extends Object>(
     Expression<T> Function($$RoutineDaysTableAnnotationComposer a) f,
@@ -3684,16 +3750,24 @@ class $$RoutinesTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> nome = const Value.absent(),
                 Value<String?> descricao = const Value.absent(),
-              }) => RoutinesCompanion(id: id, nome: nome, descricao: descricao),
+                Value<bool> isTeste = const Value.absent(),
+              }) => RoutinesCompanion(
+                id: id,
+                nome: nome,
+                descricao: descricao,
+                isTeste: isTeste,
+              ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String nome,
                 Value<String?> descricao = const Value.absent(),
+                Value<bool> isTeste = const Value.absent(),
               }) => RoutinesCompanion.insert(
                 id: id,
                 nome: nome,
                 descricao: descricao,
+                isTeste: isTeste,
               ),
           withReferenceMapper: (p0) => p0
               .map(

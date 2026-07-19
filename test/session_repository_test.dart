@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -111,5 +112,20 @@ void main() {
     expect(pontos, hasLength(1));
     expect(pontos.single.maxReps, 12);
     expect(pontos.single.maxCarga, 5);
+  });
+
+  test('evolução acompanha a duração máxima (exercícios de tempo)', () async {
+    final dia = await criarDia();
+    final prancha = await db.into(db.exercises).insert(
+          ExercisesCompanion.insert(nome: 'Prancha', tipo: const Value('tempo')),
+        );
+
+    final s = await repo.startSession(dia);
+    await repo.logSet(s, prancha, numeroSerie: 1, duracaoSeg: 45);
+    await repo.logSet(s, prancha, numeroSerie: 2, duracaoSeg: 60);
+    await repo.finishSession(s);
+
+    final pontos = await repo.getExerciseEvolution(prancha);
+    expect(pontos.single.maxDuracaoSeg, 60);
   });
 }

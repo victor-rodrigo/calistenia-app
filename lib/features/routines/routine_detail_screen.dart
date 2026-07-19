@@ -6,6 +6,7 @@ import '../../data/database/database.dart';
 import '../../data/repositories/routine_repository.dart';
 import '../session/session_providers.dart';
 import '../session/session_screen.dart';
+import '../session/test_screen.dart';
 import 'exercise_picker_screen.dart';
 import 'exercise_config_dialog.dart';
 import 'routines_providers.dart';
@@ -39,7 +40,10 @@ class RoutineDetailScreen extends ConsumerWidget {
           }
           return ListView(
             padding: const EdgeInsets.fromLTRB(12, 12, 12, 88),
-            children: [for (final d in list) _DaySection(day: d)],
+            children: [
+              for (final d in list)
+                _DaySection(day: d, isTeste: routine.isTeste),
+            ],
           );
         },
       ),
@@ -55,9 +59,10 @@ class RoutineDetailScreen extends ConsumerWidget {
 }
 
 class _DaySection extends ConsumerWidget {
-  const _DaySection({required this.day});
+  const _DaySection({required this.day, this.isTeste = false});
 
   final RoutineDay day;
+  final bool isTeste;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -123,6 +128,13 @@ class _DaySection extends ConsumerWidget {
   }
 
   Future<void> _startWorkout(BuildContext context, WidgetRef ref) async {
+    if (isTeste) {
+      await Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => TestScreen(day: day)),
+      );
+      return;
+    }
+
     final sessionId =
         await ref.read(sessionRepositoryProvider).startSession(day.id);
     if (!context.mounted) return;

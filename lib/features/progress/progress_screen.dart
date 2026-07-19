@@ -142,19 +142,26 @@ class _Evolucao extends ConsumerWidget {
             child: Center(child: Text('Nenhum registro para este exercício')),
           );
         }
-        final usaReps = list.any((p) => p.maxReps != null);
+        final temReps = list.any((p) => p.maxReps != null);
+        final temTempo = !temReps && list.any((p) => p.maxDuracaoSeg != null);
+        double valor(p) => (temReps
+                ? p.maxReps?.toDouble()
+                : temTempo
+                    ? p.maxDuracaoSeg?.toDouble()
+                    : p.maxCarga) ??
+            0;
         final spots = <FlSpot>[
-          for (final (i, p) in list.indexed)
-            FlSpot(
-              i.toDouble(),
-              (usaReps ? p.maxReps?.toDouble() : p.maxCarga) ?? 0,
-            ),
+          for (final (i, p) in list.indexed) FlSpot(i.toDouble(), valor(p)),
         ];
+        final legenda = temReps
+            ? 'Reps máximas por treino'
+            : temTempo
+                ? 'Tempo máximo (s) por treino'
+                : 'Carga máxima por treino';
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(usaReps ? 'Reps máximas por treino' : 'Carga máxima por treino',
-                style: Theme.of(context).textTheme.bodySmall),
+            Text(legenda, style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 8),
             _LineChart(spots: spots),
           ],

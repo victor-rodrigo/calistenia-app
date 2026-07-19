@@ -17,6 +17,7 @@ class Routines extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get nome => text().withLength(min: 1, max: 100)();
   TextColumn get descricao => text().nullable()();
+  BoolColumn get isTeste => boolean().withDefault(const Constant(false))();
 }
 
 class RoutineDays extends Table {
@@ -94,13 +95,14 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? driftDatabase(name: 'treino_db'));
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (m) => m.createAll(),
         onUpgrade: (m, from, to) async {
           if (from < 2) await m.addColumn(exercises, exercises.imagem);
+          if (from < 3) await m.addColumn(routines, routines.isTeste);
         },
         beforeOpen: (details) async {
           await customStatement('PRAGMA foreign_keys = ON');

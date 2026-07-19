@@ -7,7 +7,7 @@ import 'package:treino/features/routines/routines_providers.dart';
 import 'package:treino/features/routines/routines_screen.dart';
 
 Routine _ficha(int id, String nome, String? descricao) =>
-    Routine(id: id, nome: nome, descricao: descricao);
+    Routine(id: id, nome: nome, descricao: descricao, isTeste: false);
 
 void main() {
   testWidgets('lista as fichas', (tester) async {

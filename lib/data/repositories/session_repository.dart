@@ -28,11 +28,13 @@ class ExerciseEvolutionPoint {
     required this.data,
     this.maxReps,
     this.maxCarga,
+    this.maxDuracaoSeg,
   });
 
   final DateTime data;
   final int? maxReps;
   final double? maxCarga;
+  final int? maxDuracaoSeg;
 }
 
 class SessionRepository {
@@ -92,6 +94,7 @@ class SessionRepository {
   Future<List<ExerciseEvolutionPoint>> getExerciseEvolution(int exerciseId) {
     final maxReps = _db.setLogs.repsFeitas.max();
     final maxCarga = _db.setLogs.cargaOuRpe.max();
+    final maxDuracao = _db.setLogs.duracaoSeg.max();
     final query = _db.select(_db.setLogs).join([
       innerJoin(_db.workoutSessions,
           _db.workoutSessions.id.equalsExp(_db.setLogs.sessionId)),
@@ -100,12 +103,13 @@ class SessionRepository {
           _db.workoutSessions.status.equals('concluida'))
       ..groupBy([_db.workoutSessions.id])
       ..orderBy([OrderingTerm(expression: _db.workoutSessions.data)]);
-    query.addColumns([maxReps, maxCarga]);
+    query.addColumns([maxReps, maxCarga, maxDuracao]);
     return query
         .map((row) => ExerciseEvolutionPoint(
               data: row.readTable(_db.workoutSessions).data,
               maxReps: row.read(maxReps),
               maxCarga: row.read(maxCarga),
+              maxDuracaoSeg: row.read(maxDuracao),
             ))
         .get();
   }

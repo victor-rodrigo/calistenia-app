@@ -18,9 +18,17 @@ class RoutineRepository {
 
   Future<List<Routine>> getRoutines() => _routinesByName().get();
 
-  Future<int> createRoutine({required String nome, String? descricao}) {
+  Future<int> createRoutine({
+    required String nome,
+    String? descricao,
+    bool isTeste = false,
+  }) {
     return _db.into(_db.routines).insert(
-          RoutinesCompanion.insert(nome: nome, descricao: Value(descricao)),
+          RoutinesCompanion.insert(
+            nome: nome,
+            descricao: Value(descricao),
+            isTeste: Value(isTeste),
+          ),
         );
   }
 
